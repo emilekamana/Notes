@@ -29,6 +29,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   String input = "";
+
   List notes = [];
 
   @override
@@ -37,6 +38,12 @@ class _HomeState extends State<Home> {
     notes.add('value');
     notes.add('value');
     super.initState();
+  }
+
+  deleteNote(index) {
+    setState(() {
+      notes.removeAt(index);
+    });
   }
 
   @override
@@ -125,10 +132,58 @@ class _HomeState extends State<Home> {
                   child: Card(
                     elevation: 4,
                     color: const Color.fromARGB(255, 248, 221, 125),
-                    child: Center(child: Text(notes[index])),
+                    child: Stack(
+                      children: [
+                        Positioned(
+                            top: 2.0,
+                            right: 2.0,
+                            child: PopUpOptionMenu(
+                                deleteNote: deleteNote, index: index)),
+                        Center(child: Text(notes[index])),
+                      ],
+                    ),
                   ));
             }),
       ),
     ));
+  }
+}
+
+enum MenuOptions { Delete, Edit }
+
+class PopUpOptionMenu extends StatelessWidget {
+  final index;
+  final deleteNote;
+  const PopUpOptionMenu({super.key, this.deleteNote, this.index});
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return PopupMenuButton<MenuOptions>(
+      itemBuilder: (BuildContext context) {
+        return <PopupMenuEntry<MenuOptions>>[
+          const PopupMenuItem(
+            child: Text('Delete'),
+            value: MenuOptions.Delete,
+          ),
+          const PopupMenuItem(
+            child: Text('Edit'),
+            value: MenuOptions.Edit,
+          )
+        ];
+      },
+      onSelected: (value) {
+        switch (value) {
+          case MenuOptions.Delete:
+            // TODO: Handle this case.
+            print("deleted: $index");
+            deleteNote(index);
+            break;
+          case MenuOptions.Edit:
+            // TODO: Handle this case.
+            break;
+        }
+      },
+    );
   }
 }
