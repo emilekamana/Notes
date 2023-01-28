@@ -35,9 +35,9 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    notes.add('value');
-    notes.add('value');
-    notes.add('value');
+    // notes.add('value');
+    // notes.add('value');
+    // notes.add('value');
     super.initState();
   }
 
@@ -152,37 +152,60 @@ class _HomeState extends State<Home> {
           size: 32,
         ),
       ),
-      body: Container(
-        // color: Colors.green,
-        padding: const EdgeInsets.all(10),
-        width: double.infinity,
-        child: GridView.builder(
-            itemCount: notes.length,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, crossAxisSpacing: 2, mainAxisSpacing: 2),
-            itemBuilder: (BuildContext context, int index) {
-              return ConstrainedBox(
-                  constraints: const BoxConstraints(
-                      maxHeight: 200,
-                      maxWidth: 200,
-                      minHeight: 100,
-                      minWidth: 100),
-                  child: Card(
-                    elevation: 4,
-                    color: const Color.fromARGB(255, 248, 221, 125),
-                    child: Stack(
-                      children: [
-                        Positioned(
-                            top: 2.0,
-                            right: 2.0,
-                            child: PopUpOptionMenu(
-                                deleteNote: deleteNote, index: index)),
-                        Center(child: Text(notes[index])),
-                      ],
-                    ),
-                  ));
-            }),
-      ),
+      body: notes.isEmpty
+          ? Container(
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 100),
+              width: double.infinity,
+              // color: Colors.red,
+              child: FittedBox(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: const [
+                    Image(image: AssetImage('assets/blind.png')),
+                    Text(
+                      "No notes added yet!",
+                      style:
+                          TextStyle(fontWeight: FontWeight.w700, fontSize: 32),
+                    )
+                  ],
+                ),
+              ),
+            )
+          : Container(
+              // color: Colors.green,
+              padding: const EdgeInsets.all(10),
+              width: double.infinity,
+              child: GridView.builder(
+                  itemCount: notes.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 2,
+                      mainAxisSpacing: 2),
+                  itemBuilder: (BuildContext context, int index) {
+                    return ConstrainedBox(
+                        constraints: const BoxConstraints(
+                            maxHeight: 200,
+                            maxWidth: 200,
+                            minHeight: 100,
+                            minWidth: 100),
+                        child: Card(
+                          elevation: 4,
+                          color: const Color.fromARGB(255, 248, 221, 125),
+                          child: Stack(
+                            children: [
+                              Positioned(
+                                  top: 2.0,
+                                  right: 2.0,
+                                  child: PopUpOptionMenu(
+                                      deleteNote: deleteNote, index: index)),
+                              Center(child: Text(notes[index])),
+                            ],
+                          ),
+                        ));
+                  }),
+            ),
     ));
   }
 }
