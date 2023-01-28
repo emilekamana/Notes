@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 void main() {
   runApp(const MyApp());
@@ -162,9 +163,17 @@ class PopUpOptionMenu extends StatelessWidget {
     return PopupMenuButton<MenuOptions>(
       itemBuilder: (BuildContext context) {
         return <PopupMenuEntry<MenuOptions>>[
-          const PopupMenuItem(
-            child: Text('Delete'),
+          PopupMenuItem(
             value: MenuOptions.Delete,
+            child: FittedBox(child: Row(
+              children: const [
+                Icon(FontAwesomeIcons.trash),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(8, 0, 0, 0),
+                  child: Text('Delete'),
+                ),
+              ],
+            )),
           ),
           const PopupMenuItem(
             child: Text('Edit'),
@@ -176,7 +185,6 @@ class PopUpOptionMenu extends StatelessWidget {
         switch (value) {
           case MenuOptions.Delete:
             // TODO: Handle this case.
-            print("deleted: $index");
             deleteNote(index);
             break;
           case MenuOptions.Edit:
