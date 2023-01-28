@@ -47,6 +47,12 @@ class _HomeState extends State<Home> {
     });
   }
 
+  clearNotes() {
+    setState(() {
+      notes.clear();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -63,6 +69,37 @@ class _HomeState extends State<Home> {
                 fontWeight: FontWeight.w700,
                 letterSpacing: 2),
           )),
+      drawer: Drawer(
+        backgroundColor: const Color.fromARGB(255, 248, 221, 125),
+        child: ListView(
+          children: [
+            const ListTile(
+              tileColor: Colors.amber,
+              title: Text(
+                'Menu',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 32,
+                    letterSpacing: 2,
+                    fontWeight: FontWeight.w700),
+              ),
+            ),
+            ListTile(
+              title: const Text(
+                "Delete all notes",
+                style: TextStyle(color: Colors.red),
+              ),
+              trailing: const Icon(
+                FontAwesomeIcons.trash,
+                color: Colors.red,
+              ),
+              onTap: () {
+                clearNotes();
+              },
+            )
+          ],
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.amber,
         onPressed: () {
@@ -165,7 +202,8 @@ class PopUpOptionMenu extends StatelessWidget {
         return <PopupMenuEntry<MenuOptions>>[
           PopupMenuItem(
             value: MenuOptions.Delete,
-            child: FittedBox(child: Row(
+            child: FittedBox(
+                child: Row(
               children: const [
                 Icon(FontAwesomeIcons.trash),
                 Padding(
