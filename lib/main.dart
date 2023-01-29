@@ -154,7 +154,7 @@ class _HomeState extends State<Home> {
       ),
       body: notes.isEmpty
           ? Container(
-              padding: const EdgeInsets.fromLTRB(0, 0, 0, 100),
+              // padding: const EdgeInsets.fromLTRB(0, 0, 0, 50),
               width: double.infinity,
               // color: Colors.red,
               child: FittedBox(
@@ -168,7 +168,10 @@ class _HomeState extends State<Home> {
                       "No notes added yet!",
                       style:
                           TextStyle(fontWeight: FontWeight.w700, fontSize: 32),
-                    )
+                    ),
+                    RotatedBox(
+                      quarterTurns: 2,
+                      child: Padding( padding: EdgeInsets.fromLTRB(0, 0, 200, 0), child: Icon(Icons.arrow_back, size: 200, color: Colors.amber,))),
                   ],
                 ),
               ),
