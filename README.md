@@ -1,5 +1,7 @@
 # How to run this project
-
+```
+flutter run --web-renderer=html
+```
 
 
 # notes
