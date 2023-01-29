@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-void main() {
+void main() {  // Running the app
   runApp(const MyApp());
 }
 
@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp(  // Creating initial app and setting theme color
       home: const Home(),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -25,11 +25,11 @@ class Home extends StatefulWidget {
   const Home({super.key});
 
   @override
-  State<StatefulWidget> createState() => _HomeState();
+  State<StatefulWidget> createState() => _HomeState();  // creating state since it will be dynamic
 }
 
 class _HomeState extends State<Home> {
-  String input = "";
+  String input = "";  // declare variables for the state
 
   List notes = [];
 
@@ -41,13 +41,13 @@ class _HomeState extends State<Home> {
     super.initState();
   }
 
-  deleteNote(index) {
+  deleteNote(index) {  // deleting notes and changing state
     setState(() {
       notes.removeAt(index);
     });
   }
 
-  clearNotes() {
+  clearNotes() { // deleting all notes and changing state
     setState(() {
       notes.clear();
     });
@@ -55,9 +55,9 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return SafeArea(  // safe area to prevent overflow with device features
         child: Scaffold(
-      appBar: AppBar(
+      appBar: AppBar(  // App bar and styles
           centerTitle: true,
           elevation: 0.0,
           backgroundColor: Colors.amber,
@@ -69,7 +69,7 @@ class _HomeState extends State<Home> {
                 fontWeight: FontWeight.w700,
                 letterSpacing: 2),
           )),
-      drawer: Drawer(
+      drawer: Drawer(  // drawer menu with delete all option
         backgroundColor: const Color.fromARGB(255, 248, 221, 125),
         child: ListView(
           children: [
@@ -84,13 +84,13 @@ class _HomeState extends State<Home> {
                     fontWeight: FontWeight.w700),
               ),
             ),
-            ListTile(
+            ListTile(  // delete all notes option
               title: const Text(
                 "Delete all notes",
                 style: TextStyle(color: Colors.red),
               ),
               trailing: const Icon(
-                FontAwesomeIcons.trash,
+                FontAwesomeIcons.trash,  // font awesome Icon
                 color: Colors.red,
               ),
               onTap: () {
@@ -100,13 +100,13 @@ class _HomeState extends State<Home> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton(  // Button to open dialog box and create new note
         backgroundColor: Colors.amber,
         onPressed: () {
           showDialog(
               context: context,
               builder: (BuildContext context) {
-                return AlertDialog(
+                return AlertDialog(  // alert dialog for the inputs
                   backgroundColor: const Color.fromARGB(255, 248, 221, 125),
                   title: const Text('New note'),
                   titleTextStyle: const TextStyle(
@@ -120,7 +120,7 @@ class _HomeState extends State<Home> {
                     },
                   ),
                   actions: [
-                    SizedBox(
+                    SizedBox(  // sized box to determine size of child
                       width: double.infinity,
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
@@ -146,18 +146,16 @@ class _HomeState extends State<Home> {
                 );
               });
         },
-        child: const Icon(
+        child: const Icon(  // Icon
           Icons.add,
           color: Colors.white,
           size: 32,
         ),
       ),
-      body: notes.isEmpty
-          ? Container(
-              // padding: const EdgeInsets.fromLTRB(0, 0, 0, 50),
+      body: notes.isEmpty // check if list is empty and display message
+          ? SizedBox(
               width: double.infinity,
-              // color: Colors.red,
-              child: FittedBox(
+              child: FittedBox(  // Fitted box to prevent overflow
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisSize: MainAxisSize.max,
@@ -169,14 +167,14 @@ class _HomeState extends State<Home> {
                       style:
                           TextStyle(fontWeight: FontWeight.w700, fontSize: 32),
                     ),
-                    RotatedBox(
+                    RotatedBox(  // rotated box to rotate to the right direction
                       quarterTurns: 2,
-                      child: Padding( padding: EdgeInsets.fromLTRB(0, 0, 200, 0), child: Icon(Icons.arrow_back, size: 200, color: Colors.amber,))),
+                      child: Padding( padding: EdgeInsets.fromLTRB(0, 0, 700, 0), child: Icon(Icons.arrow_back, size: 200, color: Colors.amber,))),
                   ],
                 ),
               ),
             )
-          : Container(
+          : Container(  // show all notes created on a grid
               // color: Colors.green,
               padding: const EdgeInsets.all(10),
               width: double.infinity,
@@ -215,7 +213,7 @@ class _HomeState extends State<Home> {
 
 enum MenuOptions { Delete, Edit }
 
-class PopUpOptionMenu extends StatelessWidget {
+class PopUpOptionMenu extends StatelessWidget {  // pop up menu for the cards
   final index;
   final deleteNote;
   const PopUpOptionMenu({super.key, this.deleteNote, this.index});
@@ -225,7 +223,7 @@ class PopUpOptionMenu extends StatelessWidget {
     // TODO: implement build
     return PopupMenuButton<MenuOptions>(
       itemBuilder: (BuildContext context) {
-        return <PopupMenuEntry<MenuOptions>>[
+        return <PopupMenuEntry<MenuOptions>>[  // Options for the menu
           PopupMenuItem(
             value: MenuOptions.Delete,
             child: FittedBox(
@@ -239,13 +237,13 @@ class PopUpOptionMenu extends StatelessWidget {
               ],
             )),
           ),
-          const PopupMenuItem(
-            child: Text('Edit'),
-            value: MenuOptions.Edit,
-          )
+          // const PopupMenuItem(
+          //   child: Text('Edit'),
+          //   value: MenuOptions.Edit,
+          // )
         ];
       },
-      onSelected: (value) {
+      onSelected: (value) { // set actions for the menu
         switch (value) {
           case MenuOptions.Delete:
             // TODO: Handle this case.
